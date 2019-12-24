@@ -18,7 +18,7 @@ Few points to stress:
 * `rich-component` is very __small__ in itself and very __narrow__ defined functionality, it's more like a utility or a micro-framework, than full blown beast
 * __simplicity__ is one of the primary things the author concerned with
 * APIs designed to second the __native componenet definition__ APis, so migration to & from `rich-component` requires minimalistic effort - it's not binding you to anything
-* when template needs to be fetched over network, the `custom element` is defined only after that, thus enabling the component to the application only when ready to use
+* when template needs to be fetched over the network, the `custom element` definition postponed to that, thus making the component available to the application only when ready to use
 
 #### Last versions (full changelog is [here](./docs/changelog.md))
 
@@ -27,7 +27,44 @@ Few points to stress:
 
 # Usage
 
-TBD
+The workflow is ultimately simple
+* import `rich-component`'s APIs
+* define your `component`'s class extending library's `ComponentBase` class, which extends `HTMLElement`
+* part of your class implementation should include a template for your `custom element` (see APIs for details)
+
+Example. Let's assume that we build a complex component, willing to externalize the HTML (with CSS) part out of JavaScript code.
+
+Thus we have the markup in, say, `my-element.html` file. Its content may look like this (abbreviated):
+```html
+<style>
+  :host { ... }
+  
+  .content { ... }
+</style>
+
+<div class="header"></div>
+<div class="content"></div>
+<div class="footer"></div>
+```
+
+Now we can define the `my-element` component in the `my-element.js`, assuming it lies beside the `my-element.html` file above:
+```javascript
+import { initComponent, ComponentBase } from './dist/rich-component.min.js';
+...
+
+initComponent('my-element', class extends ComponentBase {
+
+  ...
+
+  static get htmlUrl() {
+		return import.meta.url.replace(/js$/, 'html');
+	}
+});
+```
+
+Of course, URL of HTML may be given any other way, even hardcoded, but I've found myself typically using the above pattern, which makes my components look uniformly.
+
+Having the code as above, `rich-component` will first ensure that you have a properly defined template source, failing as fast as possible. It will then fetch the template and cache it during initialization. It will inject the above HTML into the `shadowRoot` each time `my-element` is constructed.
 
 # API
 
