@@ -18,6 +18,11 @@ suite.runTest({ name: 'bad template - bad location', expectError: 'failed to ini
 	await initComponent('c-a-a', c);
 });
 
+suite.runTest({ name: 'bad template - empty content', expectError: 'failed to init template of' }, async () => {
+	const c = class extends ComponentBase { static get htmlUrl() { return './resources/test-empty-template.htm'; } };
+	await initComponent('c-a-a', c);
+});
+
 suite.runTest({ name: 'basic e2e' }, async test => {
 	const c = class extends ComponentBase { static get htmlUrl() { return './resources/test-a.htm'; } };
 	const ceTag = 'c-a-a';

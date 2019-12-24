@@ -8,13 +8,8 @@ class ComponentBase extends HTMLElement {
 		super();
 
 		const template = componentHTMLs[this.localName];
-
-		if (!template) {
-			console.error(`no template registered for '${this.localName}', won't inject shadow DOM`);
-		} else {
-			this.attachShadow({ mode: 'open' })
-				.appendChild(template.content.cloneNode(true));
-		}
+		this.attachShadow({ mode: 'open' })
+			.appendChild(template.content.cloneNode(true));
 	}
 }
 
