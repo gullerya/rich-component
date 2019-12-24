@@ -69,7 +69,7 @@ async function fetchTemplate(templateUrl) {
 }
 
 function validataTag(tag) {
-	if (!tag || typeof tag !== 'string' || !/^[a-z]+(-[a-z]+)*-[a-z]+$/.test(tag)) {
+	if (!tag || typeof tag !== 'string' || !/^[a-z0-9]+(-[a-z0-9]+)*-[a-z0-9]+$/.test(tag)) {
 		throw new Error(`invalid element's tag/name: ${tag}`);
 	}
 	if (componentHTMLs[tag]) {

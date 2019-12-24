@@ -1,6 +1,6 @@
 {
   "name": "rich-component",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "library providing means to work conveniently with HTML based Web Components",
   "keywords": [
     "web",
