@@ -6,6 +6,9 @@
     "web",
     "component",
     "webcomponent",
+    "custom",
+    "element",
+    "custom element",
     "html",
     "import",
     "template"
