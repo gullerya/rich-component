@@ -12,12 +12,16 @@ __`rich-component`__ provides a set of means to easily manage WebComponents with
 
 Its call is to fill up some functional gap when there is a need to conveniently manage __HTML template__ for Web Component.
 
+It helps order and cleanness freaks like myself to separate easily the HTML/CSS from the JavaScript.
+
+> Myself took it as a best practice to separate those for better readability, Dev tools support (when HTML/CSS mixed into JS their support usually becomes very limited, if any) and future extensibility easiness. It is only when I'm absolutely sure, that the component will stay small and simple, I'm inlining the template, and even then I'm half hearted.
+
 `rich-component` ensures that template for your custom element is provided correctly, fetches/caches the templates when needed and finally injects the templated `HTML` into the `shadowRoot` of each newly created component instance.
 
 Few points to stress:
-* `rich-component` is very __small__ in itself and very __narrow__ defined functionality, it's more like a utility or a micro-framework, than full blown beast
+* `rich-component` is very __small__ in itself and has very __narrow__ defined functionality, it's more like a utility or a micro-framework, than a full blown beast
 * __simplicity__ is one of the primary things the author concerned with
-* APIs designed to second the __native componenet definition__ APis, so migration to & from `rich-component` requires minimalistic effort - it's not binding you to anything
+* APIs designed to second the __native component definition__ APis, so migration to & from `rich-component` requires minimalistic effort - it's not binding you to anything
 * when template needs to be fetched over the network, the `custom element` definition postponed to that, thus making the component available to the application only when ready to use
 
 #### Last versions (full changelog is [here](./docs/changelog.md))
@@ -27,10 +31,10 @@ Few points to stress:
 
 # Usage
 
-The workflow is ultimately simple
+The workflow is ultimately simple:
 * import `rich-component`'s APIs
 * define your `component`'s class extending library's `ComponentBase` class, which extends `HTMLElement`
-* part of your class implementation should include a template for your `custom element` (see APIs for details)
+* part of your class implementation should include a template for your `custom element` (see APIs for the details)
 
 Example. Let's assume that we build a complex component, willing to externalize the HTML (with CSS) part out of JavaScript code.
 
@@ -47,7 +51,7 @@ Thus we have the markup in, say, `my-element.html` file. Its content may look li
 <div class="footer"></div>
 ```
 
-Now we can define the `my-element` component in the `my-element.js`, assuming it lies beside the `my-element.html` file above:
+Now we can define the `my-element` component in the `my-element.js`, assuming its location beside the `my-element.html` file above:
 ```javascript
 import { initComponent, ComponentBase } from './dist/rich-component.min.js';
 ...

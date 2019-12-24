@@ -31,13 +31,13 @@ async function initComponent(tag, type) {
 	let template;
 	if (TEMPLATE_PROPERTY in type) {
 		template = type[TEMPLATE_PROPERTY];
-		if (template.nodeName !== 'TEMPLATE') {
-			throw new Error(`'${tag}' provided invalid template (${template})`);
+		if (!template || template.nodeName !== 'TEMPLATE') {
+			throw new Error(`'${tag}' provided invalid template: ${template}`);
 		}
 	} else {
 		const templateUrl = type[HTML_URL_PROPERTY];
 		if (!templateUrl || typeof templateUrl !== 'string') {
-			throw new Error(`'${tag}' provided invalid HTML URL (${templateUrl})`);
+			throw new Error(`'${tag}' provided invalid HTML URL: ${templateUrl}`);
 		}
 
 		const templateRaw = await fetchTemplate(templateUrl);
