@@ -29,15 +29,19 @@ Few points to stress:
 
 #### Last versions (full changelog is [here](./docs/changelog.md))
 
+* __1.0.0__
+  * first release
+  * added docs and tests
+
 * __0.0.1__
   * initial take
 
 # Usage
 
 The workflow is ultimately simple:
-* import `rich-component`'s APIs
+* import `rich-component`'s [API](./docs/api.md)
 * define your `component`'s class extending library's `ComponentBase` class, which extends `HTMLElement`
-* part of your class implementation should include a template for your `custom element` (see APIs for the details)
+* part of your class implementation should include a template for your `custom element` (see [API](./docs/api.md) documentation for the details)
 
 Example. Let's assume that we build a complex component, willing to externalize the HTML (with CSS) part out of JavaScript code.
 
@@ -73,6 +77,12 @@ Of course, URL of HTML may be given any other way, even hardcoded, but I've foun
 
 Having the code as above, `rich-component` will first ensure that you have a properly defined template source, failing as fast as possible. It will then fetch the template and cache it during initialization. It will inject the above HTML into the `shadowRoot` each time `my-element` is constructed.
 
-# API
+Example above provides component's template via `htmlUrl` getter pointing to an external HTML/CSS resource.
+If the component has relatively small HTML part, one can provide an 'inline' template by `template` getter, which looks very similar to the `htmlUrl`, but is expected to return already crafted `template` element.
 
-TBD
+Another use case for the `template` API flavor is a need to dynamically preprocess the fetched template if, for example, it is shared between few slightly different components.
+For such a cases `rich-component` exports an otherwise internal `fetchTemplate` API.
+
+> Using the `rich-component` with 'inline' templates may still be convenient and provide some kind of a future proofness, making it an easy task to externalize HTML/CSS part when overgrown. Yet, IMHO it would also be perfectly right to not use `rich-component` at all in such a cases, but fall-back to the native API.
+
+Detailed API is [here](./docs/api.md).

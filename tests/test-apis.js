@@ -58,10 +58,17 @@ suite.runTest({ name: 'initComponent API - implementing both template/htmlUrl cl
 	await RC.initComponent('a-a-a', c);
 });
 
-suite.runTest({ name: 'initComponent API - duplicate definition', expectError: 'MAY NOT be initialized more than once' }, async () => {
+suite.runTest({ name: 'initComponent API - duplicate (to native) definition', expectError: 'has already been used with this registry' }, async () => {
+	customElements.define('a-a-a', class extends HTMLElement { });
+
+	const c = class Some extends RC.ComponentBase { static get template() { return document.createElement('template'); } };
+	await RC.initComponent('a-a-a', c);
+});
+
+suite.runTest({ name: 'initComponent API - duplicate (internal) definition', expectError: 'MAY NOT be initialized more than once' }, async () => {
 	const c1 = class Some extends RC.ComponentBase { static get template() { return document.createElement('template'); } };
-	await RC.initComponent('a-a-a', c1);
+	await RC.initComponent('a-a-b', c1);
 
 	const c2 = class Some extends RC.ComponentBase { static get template() { return document.createElement('template'); } };
-	await RC.initComponent('a-a-a', c2);
+	await RC.initComponent('a-a-b', c2);
 });

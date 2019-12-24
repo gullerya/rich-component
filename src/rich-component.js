@@ -50,7 +50,7 @@ async function initComponent(tag, type) {
 
 async function fetchTemplate(templateUrl) {
 	if (!templateUrl || typeof templateUrl !== 'string') {
-		throw new Error(`invalid HTML template URL '${templateUrl}'`);
+		throw new Error(`invalid HTML template URL: ${templateUrl}`);
 	}
 
 	let result = null;
