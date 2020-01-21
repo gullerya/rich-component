@@ -27,15 +27,5 @@ From API perspective though, it serves much like a __marker interface__.
 
 The important part is that consumer's extending class MUST contain one and only one of those:
 * `static get htmlUrl()` - static getter returning a `string`, which will be treated as a path to the template resource
-* `static get template()` - static getter returning a `template` element
-
-### __`async string fetchTemplate(url)`__
-
-This method was born for the internal usage and is nothing more than a syntax sugar over the native `fetch`.
-
-Myself found it useful in one use-case, when some preprocessing of the `template` required, so decided to expose it as public API.
-
-* __`url`__ - non-empty `string` treated as a path to the fetched resource
-
-If the method succeeds to fetch a __non-empty__ content from the `url`, it resolves to that content as __`string`__, otherwise resolves to __`null`__.
-Pay attention! This method does __not__ throw.
+* `static get template()` - static getter returning a `template` element or a `function` to provide template dynamically during component's creation
+	* `function` - when functional path taken, the function self will be resolved and cached during the component's definition phase, similarly to the static templates; regular function will be called while its scope (`this`) is the newly created element; first argument supplied will be the same newly created element too, that's for the `arrow function` syntax to be able to still get the context

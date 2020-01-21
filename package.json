@@ -1,6 +1,6 @@
 {
   "name": "rich-component",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "library providing means to work conveniently with HTML based Web Components",
   "keywords": [
     "web",
@@ -11,7 +11,8 @@
     "custom element",
     "html",
     "import",
-    "template"
+    "template",
+    "dynamic"
   ],
   "homepage": "https://github.com/gullerya/rich-component",
   "bugs": {

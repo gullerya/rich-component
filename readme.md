@@ -29,6 +29,11 @@ Few points to stress:
 
 #### Last versions (full changelog is [here](./docs/changelog.md))
 
+* __1.2.0__
+  * implemented [issue #2](https://github.com/gullerya/rich-component/issues/2) - `getTemplate` is part of the `ComponentBase`, still not documented
+  * implemented [issue #3](https://github.com/gullerya/rich-component/issues/3) - `template` getter may now provide a function to resolve the template dynamically
+  * added docs and tests
+
 * __1.1.0__
   * fixing [issue #1](https://github.com/gullerya/rich-component/issues/1) - allowing number in the custom element's tag/name
   * added docs and tests
