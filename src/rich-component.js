@@ -6,10 +6,26 @@ const
 class ComponentBase extends HTMLElement {
 	constructor() {
 		super();
+		const template = this.getTemplate();
+		if (template) {
+			this.attachShadow({ mode: 'open' }).appendChild(template);
+		} else {
+			console.error(`failed to get template for ${this.localName}`);
+		}
+	}
 
-		const template = componentHTMLs[this.localName];
-		this.attachShadow({ mode: 'open' })
-			.appendChild(template.content.cloneNode(true));
+	getTemplate() {
+		let result = null;
+		const cachedTemplate = componentHTMLs[this.localName];
+		if (typeof cachedTemplate === 'function') {
+			const dynamicTemplate = cachedTemplate.call(this, this);
+			if (dynamicTemplate && dynamicTemplate.nodeName === 'TEMPLATE') {
+				result = dynamicTemplate.content.cloneNode(true);
+			}
+		} else {
+			result = cachedTemplate.content.cloneNode(true);
+		}
+		return result;
 	}
 }
 
@@ -23,10 +39,11 @@ async function initComponent(tag, type) {
 	validataTag(tag);
 	validateType(tag, type);
 
+	//	fetch and cache template if URL based
 	let template;
 	if (TEMPLATE_PROPERTY in type) {
 		template = type[TEMPLATE_PROPERTY];
-		if (!template || template.nodeName !== 'TEMPLATE') {
+		if ((!template || template.nodeName !== 'TEMPLATE') && typeof template !== 'function') {
 			throw new Error(`'${tag}' provided invalid template: ${template}`);
 		}
 	} else {
@@ -72,17 +89,17 @@ function validataTag(tag) {
 	if (!tag || typeof tag !== 'string' || !/^[a-z0-9]+(-[a-z0-9]+)*-[a-z0-9]+$/.test(tag)) {
 		throw new Error(`invalid element's tag/name: ${tag}`);
 	}
-	if (componentHTMLs[tag]) {
-		throw new Error(`'${tag}' MAY NOT be initialized more than once`);
+	if (customElements.get(tag)) {
+		throw new Error(`'${tag}' element already defined`);
 	}
 }
 
-function validateType(tag, type) {
-	if (!type || !(type.prototype instanceof ComponentBase)) {
+function validateType(tag, Type) {
+	if (!Type || !(Type.prototype instanceof ComponentBase)) {
 		throw new Error(`invalid class for '${tag}'; MUST NOT be null and MUST be an instance of ComponentBase`);
 	}
-	if ((!(TEMPLATE_PROPERTY in type) && !(HTML_URL_PROPERTY in type)) ||
-		(TEMPLATE_PROPERTY in type && HTML_URL_PROPERTY in type)) {
+	if ((!(TEMPLATE_PROPERTY in Type) && !(HTML_URL_PROPERTY in Type)) ||
+		(TEMPLATE_PROPERTY in Type && HTML_URL_PROPERTY in Type)) {
 		throw new Error(`'${tag}' MUST implement either static getter of '${HTML_URL_PROPERTY}' property returning component's HTML path, or static getter of '${TEMPLATE_PROPERTY}' property returning a template`);
 	}
 }
