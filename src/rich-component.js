@@ -1,6 +1,7 @@
 const
 	TEMPLATE_PROPERTY = 'template',
 	HTML_URL_PROPERTY = 'htmlUrl',
+	LIGHT_DOM_KEY = Symbol('attach.light.dom'),
 	componentHTMLs = {};
 
 class ComponentBase extends HTMLElement {
@@ -8,9 +9,20 @@ class ComponentBase extends HTMLElement {
 		super();
 		const template = this.getTemplate();
 		if (template) {
-			this.attachShadow({ mode: 'open' }).appendChild(template);
+			if (this.constructor.domType === 'light') {
+				this[LIGHT_DOM_KEY] = template;
+			} else {
+				this.attachShadow({ mode: 'open' }).appendChild(template);
+			}
 		} else {
 			console.error(`failed to get template for ${this.localName}`);
+		}
+	}
+
+	connectedCallback() {
+		if (LIGHT_DOM_KEY in this) {
+			this.appendChild(this[LIGHT_DOM_KEY]);
+			delete this[LIGHT_DOM_KEY];
 		}
 	}
 
