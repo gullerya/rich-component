@@ -26,6 +26,11 @@ The `type` parameter of the `initComponent` API should be a component's class, t
 From API perspective though, it serves much like a __marker interface__.
 
 The important part is that consumer's extending class MUST contain one and only one of those:
-* `static get htmlUrl()` - static getter returning a `string`, which will be treated as a path to the template resource
-* `static get template()` - static getter returning a `template` element or a `function` to provide template dynamically during component's creation
+* `static get htmlUrl()` - returning a `string`, which will be treated as a path to the template resource
+* `static get template()` - returning a `template` element or a `function` to provide template dynamically during component's creation
 	* `function` - when functional path taken, the function self will be resolved and cached during the component's definition phase, similarly to the static templates; regular function will be called while its scope (`this`) is the newly created element; first argument supplied will be the same newly created element too, that's for the `arrow function` syntax to be able to still get the context
+
+Additional optional properties (if not implemented, the default value is taken):
+* `static get domType()` - returning a `string` with the following values supported
+	* `shadow` - default; template's contents are added to the __open shadow DOM__; addition happens in `constructor`
+	* `light` - template's contents are added as a __light DOM__; addition happens in `connectedCallback`, therefore if the components implements that callback, it MUST perform `super.connectedCallback()`

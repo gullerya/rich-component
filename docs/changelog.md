@@ -1,5 +1,8 @@
 # Changelog
 
+* __1.3.0__
+  * implemented [issue #4](https://github.com/gullerya/rich-component/issues/4) - added `domType` component's property support to allow adding the template's DOM as `light` rather then `shadow`
+
 * __1.2.0__
   * implemented [issue #2](https://github.com/gullerya/rich-component/issues/2) - `getTemplate` is part of the `ComponentBase`, still not documented; `fetchTemplate` is hereby deprecated and any usage of it should be removed, I'll remove is from API next version or two
   * implemented [issue #3](https://github.com/gullerya/rich-component/issues/3) - `template` getter may now provide a function to resolve the template dynamically
