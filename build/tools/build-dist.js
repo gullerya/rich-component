@@ -22,7 +22,6 @@ fsExtra.writeFileSync(
 	'./dist/rich-component.min.js',
 	uglifyES.minify(fsExtra.readFileSync('./dist/rich-component.js', { encoding: 'utf8' }), minifyOptions).code
 );
-fsExtra.remove('./dist/rich-component.js');
 process.stdout.write('\t\t\t\x1B[32mOK\x1B[0m' + os.EOL);
 
 process.stdout.write('\x1B[32mDONE\x1B[0m' + os.EOL);
