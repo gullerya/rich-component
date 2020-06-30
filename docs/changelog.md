@@ -1,5 +1,9 @@
 # Changelog
 
+* __1.5.0__
+  * updated dependencies versions
+  * adjusted the repo and the dist to the better practice (dist is not committed but published only)
+
 * __1.3.0__
   * implemented [issue #4](https://github.com/gullerya/rich-component/issues/4) - added `domType` component's property support to allow adding the template's DOM as `light` rather then `shadow`
 
