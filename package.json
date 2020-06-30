@@ -20,6 +20,8 @@
 		"email": "gullerya@gmail.com"
 	},
 	"license": "MIT",
+	"type": "module",
+	"browser": "dist/rich-component.min.js",
 	"files": [
 		"dist"
 	],
@@ -33,8 +35,8 @@
 		"url": "https://github.com/gullerya/rich-component"
 	},
 	"scripts": {
-		"eslint": "eslint -c ./build/.eslintrc.json ./src/**/*.js",
 		"build": "node ./build/tools/build-dist.js",
+		"lint": "eslint -c ./build/.eslintrc.json ./src/**/*.js",
 		"test": "node ./node_modules/just-test/dist/tests-runner/run-tests.js --config=./tests/tests-run-config.json"
 	},
 	"devDependencies": {
