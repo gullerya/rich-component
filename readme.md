@@ -29,7 +29,7 @@ Few points to stress:
 
 #### Last versions (full changelog is [here](./docs/changelog.md))
 
-* __1.5.0__
+* __1.6.0__
   * updated dependencies versions
   * adjusted the repo and the dist to the better practice (dist is not committed but published only)
 

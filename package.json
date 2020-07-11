@@ -1,6 +1,6 @@
 {
 	"name": "rich-component",
-	"version": "1.5.0",
+	"version": "1.6.0",
 	"description": "library providing means to work conveniently with HTML based Web Components",
 	"keywords": [
 		"web",
@@ -21,6 +21,7 @@
 	},
 	"license": "MIT",
 	"type": "module",
+	"main": "dist/rich-component.min.js",
 	"browser": "dist/rich-component.min.js",
 	"files": [
 		"dist"
@@ -40,7 +41,7 @@
 		"test": "node ./node_modules/just-test/dist/tests-runner/run-tests.js --config=./tests/tests-run-config.json"
 	},
 	"devDependencies": {
-		"eslint": "^7.3.1",
+		"eslint": "^7.4.0",
 		"eslint-config-standard": "^14.1.1",
 		"eslint-plugin-standard": "^4.0.1",
 		"eslint-plugin-promise": "^4.2.1",
