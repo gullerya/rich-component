@@ -1,3 +1,0 @@
-# `tooltip` API
-
-TODO
