@@ -50,7 +50,7 @@
 	"devDependencies": {
 		"eslint": "^7.20.0",
 		"fs-extra": "^9.1.0",
-		"just-test": "^2.3.2",
+		"just-test": "2.3.2",
 		"uglify-es": "^3.3.9"
 	}
 }
