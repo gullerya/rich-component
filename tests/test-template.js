@@ -1,7 +1,7 @@
-﻿import { createSuite } from '../../node_modules/just-test/dist/just-test.min.js'
+﻿import { getSuite } from '../../node_modules/just-test/dist/just-test.js'
 import { initComponent, ComponentBase } from '../../dist/rich-component.js';
 
-const suite = createSuite({ name: 'Testing inline templating' });
+const suite = getSuite({ name: 'Testing inline templating' });
 
 suite.runTest({ name: 'bad template - null', expectError: 'provided invalid template' }, async () => {
 	const c = class extends ComponentBase { static get template() { return null; } };

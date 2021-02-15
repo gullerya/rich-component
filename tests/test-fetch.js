@@ -1,7 +1,7 @@
-﻿import { createSuite } from '../../node_modules/just-test/dist/just-test.min.js'
+﻿import { getSuite } from '../../node_modules/just-test/dist/just-test.js'
 import { fetchTemplate } from '../../dist/rich-component.js';
 
-const suite = createSuite({ name: 'Testing fetch template' });
+const suite = getSuite({ name: 'Testing fetch template' });
 
 suite.runTest({ name: 'bad url - undefined', expectError: 'invalid HTML template URL' }, async () => {
 	await fetchTemplate();

@@ -1,8 +1,8 @@
-﻿import { createSuite } from '../../node_modules/just-test/dist/just-test.min.js'
+﻿import { getSuite } from '../../node_modules/just-test/dist/just-test.js'
 import { initComponent, ComponentBase } from '../../dist/rich-component.js';
 
 const
-	suite = createSuite({ name: 'Testing different DOM types' }),
+	suite = getSuite({ name: 'Testing different DOM types' }),
 	template = document.createElement('template');
 
 template.innerHTML = '<span class="test"></span>';

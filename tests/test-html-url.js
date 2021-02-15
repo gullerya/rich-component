@@ -1,7 +1,7 @@
-﻿import { createSuite } from '../../node_modules/just-test/dist/just-test.min.js'
+﻿import { getSuite } from '../../node_modules/just-test/dist/just-test.js'
 import { initComponent, ComponentBase } from '../../dist/rich-component.js';
 
-const suite = createSuite({ name: 'Testing externalized templating' });
+const suite = getSuite({ name: 'Testing externalized templating' });
 
 suite.runTest({ name: 'bad template - null', expectError: 'provided invalid HTML URL' }, async () => {
 	const c = class extends ComponentBase { static get htmlUrl() { return null; } };
