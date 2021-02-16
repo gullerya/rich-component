@@ -1,5 +1,9 @@
 # Changelog
 
+* __1.7.0__
+  * implemented [issue #8](https://github.com/gullerya/rich-component/issues/8) - added test and documentation of already available functionality
+  * updated dependencies versions
+
 * __1.6.0__
   * updated dependencies versions
   * adjusted the repo and the dist to the better practice (dist is not committed but published only)

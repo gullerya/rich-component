@@ -25,9 +25,15 @@ Few points to stress:
 * when template needs to be fetched over the network, the `custom element` definition postponed to that, thus making the component available to the application only when ready to use
 * template's content defaultly added as an __open shadow DOM__ to the component instance; it is possible to override this and add it as a __light DOM__.
 
-> Customized built-in elements are not yet supported, will extend the library upon first such a use-case.
+> Customized built-in elements are not yet supported, will extend the library if/when that spec will become widely supported by browsers.
 
 #### Last versions (full changelog is [here](./docs/changelog.md))
+
+* __1.7.0__
+  * implemented [issue #8](https://github.com/gullerya/rich-component/issues/8):
+    * added post evaluation for unresolved template
+	* added support for `data-template-url` attribute to resolve the template dynamically
+  * updated dependencies versions
 
 * __1.6.0__
   * updated dependencies versions
@@ -35,11 +41,6 @@ Few points to stress:
 
 * __1.3.0__
   * implemented [issue #4](https://github.com/gullerya/rich-component/issues/4) - added `domType` component's property support to allow adding the template's DOM as `light` rather then `shadow`
-
-* __1.2.0__
-  * implemented [issue #2](https://github.com/gullerya/rich-component/issues/2) - `getTemplate` is part of the `ComponentBase`, still not documented
-  * implemented [issue #3](https://github.com/gullerya/rich-component/issues/3) - `template` getter may now provide a function to resolve the template dynamically
-  * added docs and tests
 
 # Usage
 
