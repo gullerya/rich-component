@@ -9,23 +9,23 @@ suite.runTest({ name: 'API present basic' }, test => {
 	test.assertEqual('function', typeof RC.fetchTemplate);
 });
 
-suite.runTest({ name: 'initComponent API - undefined tag', expectError: 'invalid element\'s tag\/name:' }, async () => {
+suite.runTest({ name: 'initComponent API - undefined tag', expectError: 'invalid element\'s tag/name:' }, async () => {
 	await RC.initComponent();
 });
 
-suite.runTest({ name: 'initComponent API - null tag', expectError: 'invalid element\'s tag\/name:' }, async () => {
+suite.runTest({ name: 'initComponent API - null tag', expectError: 'invalid element\'s tag/name:' }, async () => {
 	await RC.initComponent(null);
 });
 
-suite.runTest({ name: 'initComponent API - non-string tag', expectError: 'invalid element\'s tag\/name:' }, async () => {
+suite.runTest({ name: 'initComponent API - non-string tag', expectError: 'invalid element\'s tag/name:' }, async () => {
 	await RC.initComponent(function () { });
 });
 
-suite.runTest({ name: 'initComponent API - empty-string tag', expectError: 'invalid element\'s tag\/name:' }, async () => {
+suite.runTest({ name: 'initComponent API - empty-string tag', expectError: 'invalid element\'s tag/name:' }, async () => {
 	await RC.initComponent('');
 });
 
-suite.runTest({ name: 'initComponent API - invalid custom element name', expectError: 'invalid element\'s tag\/name:' }, async () => {
+suite.runTest({ name: 'initComponent API - invalid custom element name', expectError: 'invalid element\'s tag/name:' }, async () => {
 	await RC.initComponent('some');
 });
 

@@ -1,6 +1,6 @@
 {
 	"name": "rich-component",
-	"version": "1.6.1-snapshot",
+	"version": "1.7.0-snapshot",
 	"description": "library providing means to work conveniently with HTML based Web Components",
 	"keywords": [
 		"web",
@@ -44,13 +44,13 @@
 	},
 	"scripts": {
 		"build": "node ./ci/tools/build-dist.js",
-		"lint": "eslint -c ./ci/.eslintrc.json ./src/**/*.js",
+		"lint": "eslint -c ./ci/.eslintrc.json ./ci/**/*.js ./src/**/*.js ./tests/**/*.js",
 		"test": "node ./node_modules/just-test/dist/tests-runner/run-tests.js --config=./tests/tests-run-config.json"
 	},
 	"devDependencies": {
 		"eslint": "^7.20.0",
-		"fs-extra": "^9.1.0",
 		"just-test": "2.3.2",
+		"fs-extra": "^9.1.0",
 		"uglify-es": "^3.3.9"
 	}
 }
