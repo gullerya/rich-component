@@ -5,7 +5,8 @@ import uglifyES from 'uglify-es';
 const
 	files = [
 		'rich-component-class.js',
-		'rich-component.js'
+		'rich-component.js',
+		'template-fetch.js'
 	],
 	minifyOptions = {
 		toplevel: true

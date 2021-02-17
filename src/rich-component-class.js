@@ -1,3 +1,5 @@
+import { fetchTemplate } from './template-fetch.js';
+
 const
 	TEMPLATE_PROPERTY = 'template',
 	HTML_URL_PROPERTY = 'htmlUrl',
@@ -64,37 +66,14 @@ async function initComponent(tag, type) {
 			throw new Error(`'${tag}' provided invalid HTML URL: ${templateUrl}`);
 		}
 
-		const templateRaw = await fetchTemplate(templateUrl);
-		if (!templateRaw) {
+		template = await fetchTemplate(templateUrl);
+		if (!template) {
 			throw new Error(`failed to init template of '${tag}' from '${templateUrl}'`)
 		}
-
-		template = document.createElement('template');
-		template.innerHTML = templateRaw;
 	}
 
 	componentHTMLs[tag] = template;
 	customElements.define(tag, type);
-}
-
-async function fetchTemplate(templateUrl) {
-	if (!templateUrl || typeof templateUrl !== 'string') {
-		throw new Error(`invalid HTML template URL: ${templateUrl}`);
-	}
-
-	let result = null;
-	const htmlResponse = await fetch(templateUrl);
-	if (htmlResponse.ok) {
-		const htmlText = await htmlResponse.text();
-		if (htmlText) {
-			result = htmlText;
-		} else {
-			console.error(`failed to fetch HTML template from '${templateUrl}', no content`);
-		}
-	} else {
-		console.error(`failed to fetch HTML template from '${templateUrl}', status ${htmlResponse.status}`);
-	}
-	return result;
 }
 
 function validataTag(tag) {
