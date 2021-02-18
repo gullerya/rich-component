@@ -44,7 +44,7 @@ Implementation - `static get htmlUrl()` getter. This strategy allows to provide 
 The getter MUST return either of thoss:
 - `string` - static flavor; MUST be a non-empty URL to the template resource
 - `function self => string` - dynamic flavor; this function will be called **each time** the component is created, during construction; it is expected to return a valid `string` URL; the function will be provided with the component instance as first parameter (`self`)
-	- this is the only flavor where injection of template will happen in **after** the c~tor is done; you **may not** assume that the template injected, but only in `templated` event
+	- this is the only flavor where injection of template will happen in **after** the c~tor is done; you **must not** assume that the template injected, but only in `templated` event
 	- to allow post template injection logic, this flavor will fire `templated` event on the component
 
 ### Shadow vs Light (optional)
