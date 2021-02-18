@@ -32,20 +32,6 @@ async function fetchTemplate(templateUrl, forceRefetch = false) {
 				.catch(reject);
 		});
 		templatesCache[templateUrl] = resultPromise;
-
-		// resultPromise = fetch(templateUrl);
-		// const htmlResponse = await resultPromise;
-		// if (!htmlResponse.ok) {
-		// 	throw new Error(`failed to fetch template from '${templateUrl}', status ${htmlResponse.status}`);
-		// } else {
-		// 	const htmlText = await htmlResponse.text();
-		// 	if (!htmlText) {
-		// 		throw new Error(`failed to fetch template from '${templateUrl}', no content`);
-		// 	} else {
-		// 		resultPromise = document.createElement('template');
-		// 		resultPromise.innerHTML = htmlText;
-		// 	}
-		// }
 	}
 
 	return resultPromise;
