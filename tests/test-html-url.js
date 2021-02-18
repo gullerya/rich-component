@@ -61,7 +61,7 @@ suite.runTest({ name: 'dynamic template URL' }, async test => {
 	test.assertEqual('DynUrlB', e2.shadowRoot.querySelector('span').textContent);
 });
 
-suite.runTest({ name: 'dynamic template URL - negative' }, async test => {
+suite.runTest({ name: 'dynamic template URL - negative - null function' }, async test => {
 	let e;
 	console.error = proxifyNative(console.error, p => {
 		e = p;

@@ -16,12 +16,8 @@ class ComponentBase extends HTMLElement {
 				injectTemplate(this, template, isLight);
 			} else {
 				template.then(t => {
-					if (t) {
-						injectTemplate(this, t, isLight);
-						this.dispatchEvent(new Event('templated'));
-					} else {
-						console.error(`failed to get template for '${this.localName}'`);
-					}
+					injectTemplate(this, t, isLight);
+					this.dispatchEvent(new Event('templated'));
 				});
 			}
 		} else {
