@@ -20,12 +20,12 @@ class ComponentBase extends HTMLElement {
 						injectTemplate(this, t, isLight);
 						this.dispatchEvent(new Event('templated'));
 					} else {
-						console.error(`failed to get template for ${this.localName}`);
+						console.error(`failed to get template for '${this.localName}'`);
 					}
 				});
 			}
 		} else {
-			console.error(`failed to get template for ${this.localName}`);
+			console.error(`failed to get template for '${this.localName}'`);
 		}
 	}
 
@@ -41,9 +41,9 @@ class ComponentBase extends HTMLElement {
 		const cachedTemplate = componentHTMLs[this.localName];
 		if (typeof cachedTemplate === 'function') {
 			const dynamicTemplate = cachedTemplate.call(this, this);
-			if (dynamicTemplate.nodeName === 'TEMPLATE') {
+			if (dynamicTemplate && dynamicTemplate.nodeName === 'TEMPLATE') {
 				result = dynamicTemplate;
-			} else {
+			} else if (typeof dynamicTemplate === 'string') {
 				result = fetchTemplate(dynamicTemplate);
 			}
 		} else {

@@ -68,4 +68,3 @@ function proxifyNative(native, proxy) {
 		return native.call(this, args);
 	};
 }
-

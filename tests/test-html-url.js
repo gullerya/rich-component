@@ -60,3 +60,31 @@ suite.runTest({ name: 'dynamic template URL' }, async test => {
 	});
 	test.assertEqual('DynUrlB', e2.shadowRoot.querySelector('span').textContent);
 });
+
+suite.runTest({ name: 'dynamic template URL - negative' }, async test => {
+	let e;
+	console.error = proxifyNative(console.error, p => {
+		e = p;
+	});
+
+	const ceTag = `ce-${test.getRandom(8).toLowerCase()}`;
+	const c = class extends ComponentBase {
+		static get htmlUrl() {
+			return () => null;
+		}
+	};
+	await initComponent(ceTag, c);
+	document.createElement(ceTag);
+	test.assertEqual(`failed to get template for '${ceTag}'`, e);
+});
+
+function proxifyNative(native, proxy) {
+	return args => {
+		try {
+			proxy.call(this, args);
+		} catch (e) {
+			console.error(e);
+		}
+		return native.call(this, args);
+	};
+}
