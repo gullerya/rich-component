@@ -1,3 +1,5 @@
+import { fetchTemplate } from './template-fetch.js';
+
 const
 	TEMPLATE_PROPERTY = 'template',
 	HTML_URL_PROPERTY = 'htmlUrl',
@@ -8,14 +10,18 @@ class ComponentBase extends HTMLElement {
 	constructor() {
 		super();
 		const template = this.getTemplate();
+		const isLight = this.constructor.domType === 'light';
 		if (template) {
-			if (this.constructor.domType === 'light') {
-				this[LIGHT_DOM_KEY] = template;
+			if (template.content) {
+				injectTemplate(this, template, isLight);
 			} else {
-				this.attachShadow({ mode: 'open' }).appendChild(template);
+				template.then(t => {
+					injectTemplate(this, t, isLight);
+					this.dispatchEvent(new Event('templated'));
+				});
 			}
 		} else {
-			console.error(`failed to get template for ${this.localName}`);
+			console.error(`failed to get template for '${this.localName}'`);
 		}
 	}
 
@@ -32,10 +38,12 @@ class ComponentBase extends HTMLElement {
 		if (typeof cachedTemplate === 'function') {
 			const dynamicTemplate = cachedTemplate.call(this, this);
 			if (dynamicTemplate && dynamicTemplate.nodeName === 'TEMPLATE') {
-				result = dynamicTemplate.content.cloneNode(true);
+				result = dynamicTemplate;
+			} else if (typeof dynamicTemplate === 'string') {
+				result = fetchTemplate(dynamicTemplate);
 			}
 		} else {
-			result = cachedTemplate.content.cloneNode(true);
+			result = cachedTemplate;
 		}
 		return result;
 	}
@@ -59,42 +67,17 @@ async function initComponent(tag, type) {
 			throw new Error(`'${tag}' provided invalid template: ${template}`);
 		}
 	} else {
-		const templateUrl = type[HTML_URL_PROPERTY];
-		if (!templateUrl || typeof templateUrl !== 'string') {
-			throw new Error(`'${tag}' provided invalid HTML URL: ${templateUrl}`);
+		template = type[HTML_URL_PROPERTY];
+		if ((!template || typeof template !== 'string') && typeof template !== 'function') {
+			throw new Error(`'${tag}' provided invalid template URL: ${template}`);
 		}
-
-		const templateRaw = await fetchTemplate(templateUrl);
-		if (!templateRaw) {
-			throw new Error(`failed to init template of '${tag}' from '${templateUrl}'`)
+		if (typeof template === 'string') {
+			template = await fetchTemplate(template);
 		}
-
-		template = document.createElement('template');
-		template.innerHTML = templateRaw;
 	}
 
 	componentHTMLs[tag] = template;
 	customElements.define(tag, type);
-}
-
-async function fetchTemplate(templateUrl) {
-	if (!templateUrl || typeof templateUrl !== 'string') {
-		throw new Error(`invalid HTML template URL: ${templateUrl}`);
-	}
-
-	let result = null;
-	const htmlResponse = await fetch(templateUrl);
-	if (htmlResponse.ok) {
-		const htmlText = await htmlResponse.text();
-		if (htmlText) {
-			result = htmlText;
-		} else {
-			console.error(`failed to fetch HTML template from '${templateUrl}', no content`);
-		}
-	} else {
-		console.error(`failed to fetch HTML template from '${templateUrl}', status ${htmlResponse.status}`);
-	}
-	return result;
 }
 
 function validataTag(tag) {
@@ -113,5 +96,14 @@ function validateType(tag, Type) {
 	if ((!(TEMPLATE_PROPERTY in Type) && !(HTML_URL_PROPERTY in Type)) ||
 		(TEMPLATE_PROPERTY in Type && HTML_URL_PROPERTY in Type)) {
 		throw new Error(`'${tag}' MUST implement either static getter of '${HTML_URL_PROPERTY}' property returning component's HTML path, or static getter of '${TEMPLATE_PROPERTY}' property returning a template`);
+	}
+}
+
+function injectTemplate(target, template, light = false) {
+	const c = template.content.cloneNode(true);
+	if (light) {
+		target[LIGHT_DOM_KEY] = c;
+	} else {
+		target.attachShadow({ mode: 'open' }).appendChild(c);
 	}
 }

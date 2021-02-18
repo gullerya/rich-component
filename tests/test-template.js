@@ -94,3 +94,31 @@ suite.runTest({ name: 'dynamic template resolution with function - c~tor time' }
 	we2.innerHTML = `<${ceTag} ${aName}="2"></${ceTag}>`;
 	test.assertEqual('template2', we2.querySelector(ceTag).shadowRoot.textContent);
 });
+
+suite.runTest({ name: 'dynamic template resolution with function - negative' }, async test => {
+	let e;
+	console.error = proxifyNative(console.error, p => {
+		e = p;
+	});
+
+	const ceTag = `ce-${test.getRandom(8).toLowerCase()}`;
+	const c = class extends ComponentBase {
+		static get template() {
+			return () => null;
+		}
+	};
+	await initComponent(ceTag, c);
+	document.createElement(ceTag);
+	test.assertEqual(`failed to get template for '${ceTag}'`, e);
+});
+
+function proxifyNative(native, proxy) {
+	return args => {
+		try {
+			proxy.call(this, args);
+		} catch (e) {
+			console.error(e);
+		}
+		return native.call(this, args);
+	};
+}
