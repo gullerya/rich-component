@@ -25,6 +25,11 @@ Few points to stress:
 
 ## Last versions (full changelog is [here](docs/changelog.md))
 
+- __1.8.0__
+  - implemented [issue #8](https://github.com/gullerya/rich-component/issues/8)
+	- added dynamic html URL provisioning
+  - updated dependencies versions
+
 - __1.7.0__
   - implemented [issue #8](https://github.com/gullerya/rich-component/issues/8) - added test and documentation of already available functionality
   - updated dependencies versions
@@ -32,9 +37,6 @@ Few points to stress:
 - __1.6.0__
   - updated dependencies versions
   - adjusted the repo and the dist to the better practice (dist is not committed but published only)
-
-- __1.3.0__
-  - implemented [issue #4](https://github.com/gullerya/rich-component/issues/4) - added `domType` component's property support to allow adding the template's DOM as `light` rather then `shadow`
 
 # Usage
 
